@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum ButtonType { payBills, donate, receiptients, offers }
+
 enum TransactionType { sent, received, pending }
 
 void main() => runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xff2931a5),
         textTheme: TextTheme(
-          title: TextStyle(
+          titleLarge: TextStyle(
             fontSize: 27,
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -27,133 +28,117 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final String title;
-  MyHomePage({this.title});
+  MyHomePage({required this.title});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
+        body: ListView(
           children: <Widget>[
-            SingleChildScrollView(
+            Container(
+              padding: EdgeInsets.all(21),
+              color: Theme.of(context).primaryColor,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(21),
-                    color: Theme.of(context).primaryColor,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Hey James,",
-                                  style: Theme.of(context).textTheme.title,
-                                ),
-                                Text(
-                                  "What would you do like to do today ?",
-                                  style: TextStyle(color: Colors.white70),
-                                ),
-                              ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Hey James,",
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          Text(
+                            "What would you do like to do today ?",
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black45,
+                              blurRadius: 5.0,
+                              offset: Offset(0, 3),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black45,
-                                    blurRadius: 5.0,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
-                                shape: BoxShape.circle,
-                                color: Colors.transparent,
-                              ),
-                              child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                  "https://cdn.pixabay.com/photo/2017/11/02/14/26/model-2911329_960_720.jpg",
-                                ),
-                              ),
-                            )
                           ],
+                          shape: BoxShape.circle,
+                          color: Colors.transparent,
                         ),
-                        SizedBox(
-                          height: 15.0,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            "https://cdn.pixabay.com/photo/2017/11/02/14/26/model-2911329_960_720.jpg",
+                          ),
                         ),
-                        SendReceiveSwitch(),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.all(21),
-                    color: Color(0xfff4f5f9),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Flexible(
-                          child: CustomButton(buttonType: ButtonType.payBills),
-                        ),
-                        Flexible(
-                          child: CustomButton(buttonType: ButtonType.donate),
-                        ),
-                        Flexible(
-                          child:
-                              CustomButton(buttonType: ButtonType.receiptients),
-                        ),
-                        Flexible(
-                          child: CustomButton(buttonType: ButtonType.offers),
-                        ),
-                      ],
-                    ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  SendReceiveSwitch(),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(21),
+              color: Color(0xfff4f5f9),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Flexible(
+                    child: CustomButton(buttonType: ButtonType.payBills),
+                  ),
+                  Flexible(
+                    child: CustomButton(buttonType: ButtonType.donate),
+                  ),
+                  Flexible(
+                    child: CustomButton(buttonType: ButtonType.receiptients),
+                  ),
+                  Flexible(
+                    child: CustomButton(buttonType: ButtonType.offers),
                   ),
                 ],
               ),
             ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(21.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Text(
-                      "RECENT TRANSACTIONS",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 17.0,
-                      ),
+            Container(
+              padding: EdgeInsets.all(21.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Text(
+                    "RECENT TRANSACTIONS",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 17.0,
                     ),
-                    Expanded(
-                      child: ListView(
-                        children: <Widget>[
-                          Transaction(
-                            receptient: "Amazigh Halzoun",
-                            transactionAmout: "5000.00",
-                            transactionDate: "26 Jun 2019",
-                            transactionInfo: "Laptop",
-                            transactionType: TransactionType.sent,
-                          ),
-                          Transaction(
-                            receptient: "Awesome Client",
-                            transactionAmout: "15000.00",
-                            transactionDate: "26 Jun 2019",
-                            transactionInfo: "Mobile App",
-                            transactionType: TransactionType.received,
-                          ),
-                          Transaction(
-                            receptient: "Lazy Client",
-                            transactionAmout: "25000.00",
-                            transactionDate: "24 Jun 2019",
-                            transactionInfo: "Mobile App",
-                            transactionType: TransactionType.pending,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  Transaction(
+                    receptient: "Amazigh Halzoun",
+                    transactionAmout: "5000.00",
+                    transactionDate: "26 Jun 2019",
+                    transactionInfo: "Laptop",
+                    transactionType: TransactionType.sent,
+                  ),
+                  Transaction(
+                    receptient: "Awesome Client",
+                    transactionAmout: "15000.00",
+                    transactionDate: "26 Jun 2019",
+                    transactionInfo: "Mobile App",
+                    transactionType: TransactionType.received,
+                  ),
+                  Transaction(
+                    receptient: "Lazy Client",
+                    transactionAmout: "25000.00",
+                    transactionDate: "24 Jun 2019",
+                    transactionInfo: "Mobile App",
+                    transactionType: TransactionType.pending,
+                  ),
+                ],
               ),
             ),
           ],
@@ -164,19 +149,17 @@ class MyHomePage extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              title: Text("Home"),
+              label: "Home",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.access_time),
-              title: Text("History"),
+              label: "History",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.message),
-              title: Text("Notifications"),
-            ),
+                icon: Icon(Icons.message), label: "Notifications"),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              title: Text("Settings"),
+              label: "Settings",
             ),
           ],
         ),
@@ -198,7 +181,7 @@ class SendReceiveSwitch extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           DragTarget(
-            builder: (context, List<int> candidateData, rejectedData) {
+            builder: (context, List candidateData, rejectedData) {
               return Container(
                 padding: EdgeInsets.all(15.0),
                 child: Text(
@@ -211,7 +194,7 @@ class SendReceiveSwitch extends StatelessWidget {
               return true;
             },
             onAccept: (data) {
-              Scaffold.of(context).showSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text("Receive!"),
                 ),
@@ -261,7 +244,7 @@ class SendReceiveSwitch extends StatelessWidget {
             ),
           ),
           DragTarget(
-            builder: (context, List<int> candidateData, rejectedData) {
+            builder: (context, List candidateData, rejectedData) {
               return Container(
                 padding: EdgeInsets.all(15.0),
                 child: Text(
@@ -292,7 +275,7 @@ class SendReceiveSwitch extends StatelessWidget {
 
 class CustomButton extends StatelessWidget {
   final ButtonType buttonType;
-  const CustomButton({Key key, this.buttonType}) : super(key: key);
+  const CustomButton({Key? key, required this.buttonType}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     String buttonText = "", buttonImage;
@@ -361,12 +344,12 @@ class Transaction extends StatelessWidget {
   final TransactionType transactionType;
   final String transactionAmout, transactionInfo, transactionDate, receptient;
   const Transaction(
-      {Key key,
-      this.transactionType,
-      this.transactionAmout,
-      this.transactionInfo,
-      this.transactionDate,
-      this.receptient})
+      {Key? key,
+      required this.transactionType,
+      required this.transactionAmout,
+      required this.transactionInfo,
+      required this.transactionDate,
+      required this.receptient})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -398,7 +381,7 @@ class Transaction extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             blurRadius: 5.0,
-            color: Colors.grey[350],
+            color: Colors.grey.shade300,
             offset: Offset(0, 3),
           ),
         ],
@@ -445,9 +428,11 @@ class Transaction extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      receptient,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Expanded(
+                      child: Text(
+                        receptient,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Text(
                       "\$ $transactionAmout",
@@ -458,15 +443,19 @@ class Transaction extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
-                      "$transactionInfo - $transactionDate",
-                      style: TextStyle(color: Colors.grey[700]),
+                    Expanded(
+                      child: Text(
+                        "$transactionInfo - $transactionDate",
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
                     ),
-                    Text(
-                      "$transactionName",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: color,
+                    Flexible(
+                      child: Text(
+                        "$transactionName",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: color,
+                        ),
                       ),
                     ),
                   ],
